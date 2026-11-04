@@ -1,26 +1,125 @@
 @import "tailwindcss";
 
+/*
+ * Design reference: Figma "ANYANG EYE — Main (v4 Belgrade Pattern)" at 1920px.
+ * --px scales every design pixel fluidly: 1px at 1920w, down to 0.5px at ≤960w.
+ */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --px: clamp(0.5px, calc(100vw / 1920), 1px);
+  --gutter: clamp(20px, calc(100vw * 100 / 1920), 100px);
+}
+
+@theme {
+  --color-background: #fdfbef;
+  --color-surface: #fff4d6;
+  --color-surface-alt: #f4f0db;
+  --color-surface-dark: #2f4259;
+  --color-foreground: #2f4259;
+  --color-on-dark: #fdfbef;
+  --color-accent: #ccbf99;
+  --color-accent-sub: #5c7187;
+  --color-highlight: #e7fd55;
+  --color-muted: #4b5048;
+
+  --radius-md: 20px;
+
+  --ease-out-soft: cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --font-display: var(--font-fraunces), var(--font-noto-serif-kr), serif;
+  --font-ui: var(--font-work-sans), "Pretendard Variable", Pretendard, sans-serif;
+  --font-serif-kr: var(--font-noto-serif-kr), serif;
+  --font-kr: "Pretendard Variable", Pretendard, var(--font-work-sans), sans-serif;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+/* ---------- Typography (Figma text styles) ---------- */
+@utility text-display-l {
+  font-size: clamp(56px, calc(100vw * 160 / 1920), 160px);
+  line-height: 1;
+  letter-spacing: -2px;
+}
+@utility text-display-m {
+  font-size: clamp(44px, calc(100vw * 100 / 1920), 100px);
+  line-height: 1.1;
+  letter-spacing: -1.5px;
+}
+@utility text-display-s {
+  font-size: clamp(40px, calc(100vw * 96 / 1920), 96px);
+  line-height: 1.042;
+  letter-spacing: -1.5px;
+}
+@utility text-headline-xl {
+  font-size: clamp(34px, calc(100vw * 56 / 1920), 56px);
+  line-height: 1.1;
+  letter-spacing: 1.12px;
+}
+@utility text-quote {
+  font-size: clamp(26px, calc(100vw * 48 / 1920), 48px);
+  line-height: 1.1;
+  letter-spacing: 0.96px;
+}
+@utility text-headline-m {
+  font-size: clamp(22px, calc(100vw * 40 / 1920), 40px);
+  line-height: 1.1;
+  letter-spacing: 0.8px;
+}
+@utility text-ui-l {
+  font-size: 16px;
+  line-height: 1;
+  letter-spacing: 1.6px;
+}
+@utility text-ui-m {
+  font-size: 14px;
+  line-height: 1;
+  letter-spacing: 1.4px;
+}
+@utility text-ui-s {
+  font-size: 12px;
+  line-height: 1;
+  letter-spacing: 1.2px;
+}
+
+/* ---------- Fluid spacing in design pixels: mt-u-144 = 144 design px ---------- */
+@utility px-gutter {
+  padding-inline: var(--gutter);
+}
+@utility mt-u-* {
+  margin-top: calc(var(--px) * --value(integer));
+}
+@utility pt-u-* {
+  padding-top: calc(var(--px) * --value(integer));
+}
+@utility pb-u-* {
+  padding-bottom: calc(var(--px) * --value(integer));
+}
+@utility bottom-u-* {
+  bottom: calc(var(--px) * --value(integer));
+}
+@utility min-h-u-* {
+  min-height: calc(var(--px) * --value(integer));
+}
+
+html {
+  scroll-behavior: smooth;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--color-background);
+  color: var(--color-foreground);
+  font-family: var(--font-ui);
+  /* Fraunces axes used throughout the design */
+  font-variation-settings: "SOFT" 0, "WONK" 1;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Keep arrow glyphs as text, not emoji */
+.glyph {
+  font-variant-emoji: text;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
 }
